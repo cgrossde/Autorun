@@ -1,0 +1,27 @@
+{
+  "name": "autorun",
+  "version": "1.0.0",
+  "description": "Multiplatform add/remove of executables to run on startup",
+  "repository": "https://github.com/cgrossde/Autorun",
+  "keywords": [
+    "autorun",
+    "autostart"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "lint": "(node_modules/jscs/bin/jscs -c .jscsrc --max-errors 10  --reporter console . || exit 0) && (node_modules/eslint/bin/eslint.js -c .eslintrc . || exit 0)",
+    "test": "node node_modules/mocha/bin/mocha"
+  },
+  "author": "Christoph Groß <gross@blubyte.de> (http://chris-labs.de/)",
+  "license": "MIT",
+  "dependencies": {
+    "applescript": "^0.2.1",
+    "promise": "^6.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^0.10.1",
+    "expect": "^1.1.0",
+    "jscs": "^1.8.1",
+    "mocha": "^2.0.1"
+  }
+}
