@@ -67,17 +67,19 @@ Disable autorun. Returns an error if platform is not supported.
 
 Will be returned as `err` parameter for callbacks or using `reject` for promises. An error object looks like this:
 
-    {
-      name: 'AutorunEnableFailed',
-      description: 'Could not enable autorun using the registry',
-      platform: 'win', // os.platform()
-      cause: {  // optional, if this error was triggered by another error
-        name: 'ChildProcessFailed',
-        description: 'Child process failed',
-        output: '...', // Optional: output of the failed process
-        cause: { ... }
-      }
-    }
+```JavaScript
+{
+  name: 'AutorunEnableFailed',
+  description: 'Could not enable autorun using the registry',
+  platform: 'win', // os.platform()
+  cause: {  // optional, if this error was triggered by another error
+    name: 'ChildProcessFailed',
+    description: 'Child process failed',
+    output: '...', // Optional: output of the failed process
+    cause: { ... }
+  }
+}
+```
 
 Possible error names are: *PlatformUnsupported*, *AutorunEnableFailed*, *AutorunDisableFailed*, *AutorunIsSetFailed*, *ChildProcessFailed*
 

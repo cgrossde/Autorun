@@ -168,14 +168,14 @@ function _macAppleScriptIsAutorunSet(executablePath) {
 			'return 0\n' +
 		'end tell';
 		applescript.execString(script, function(err, res) {
-			if (err || res === undefined) {
+			if (err) {
 				var error = new Error('Could not check if autostart was set using AppleScript');
 				error.name = 'AutorunIsSetFailed';
 				error.platform = os.platform();
 				error.cause = err;
 				reject(error);
 			}
-			else if (res === 1) {
+			else if (res !== undefined && res === 1) {
 				resolve(true);
 			}
 			else {
