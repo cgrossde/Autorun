@@ -45,7 +45,10 @@ describe('Test autorun', function() {
     if (autorun.isPlatformSupported()) {
       autorun.enable(function(err) {
         expect(err).toBe(null);
-        expect(autorun.isSet()).toBe(true);
+        autorun.isSet(function(err, res) {
+          expect(err).toBe(null);
+          expect(res).toBe(true);
+        });
       });
     }
   });
@@ -54,7 +57,10 @@ describe('Test autorun', function() {
     if (autorun.isPlatformSupported()) {
       autorun.enable(function(err) {
         expect(err).toBe(null);
-        expect(autorun.isSet()).toBe(false);
+        autorun.isSet(function(err, res) {
+          expect(err).toBe(null);
+          expect(res).toBe(false);
+        });
       });
     }
   });
