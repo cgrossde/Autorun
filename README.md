@@ -10,38 +10,39 @@ Run an executable on system start using AppleScript on Mac or the registry on Wi
 
 ## How to use
 
-    var Autorun = require('./index');
-    var autorun = new Autorun('AppName', '/Applications/pullover.app');
-    
-    // Check if platform is supported
-    if (autorun.isPlatformSupported()) {
-      // Check if autorun is enabled using callback
-      autorun.isSet(function(err, enabled) {
-        if (err) console.log(err);
-        console.log('Autorun is ' + ((enabled) ? 'enabled' : 'disabled'));
-    
-        // Toogle autorun using promises
-        if (enabled) {
-          autorun.disable()
-          .then(function() {
-            console.log('Autorun disabled');
-          })
-          .catch(function(err) {
-            console.log('Error disabling autorun', err);
-          });
-        }
-        else {
-          autorun.enable()
-          .then(function() {
-            console.log('Autorun enabled');
-          })
-          .catch(function(err) {
-            console.log('Error enabling autorun', err);
-          });
-        }
+```JavaScript
+var Autorun = require('./index');
+var autorun = new Autorun('AppName', '/Applications/pullover.app');
+
+// Check if platform is supported
+if (autorun.isPlatformSupported()) {
+  // Check if autorun is enabled using callback
+  autorun.isSet(function(err, enabled) {
+    if (err) console.log(err);
+    console.log('Autorun is ' + ((enabled) ? 'enabled' : 'disabled'));
+
+    // Toogle autorun using promises
+    if (enabled) {
+      autorun.disable()
+      .then(function() {
+        console.log('Autorun disabled');
+      })
+      .catch(function(err) {
+        console.log('Error disabling autorun', err);
       });
     }
-
+    else {
+      autorun.enable()
+      .then(function() {
+        console.log('Autorun enabled');
+      })
+      .catch(function(err) {
+        console.log('Error enabling autorun', err);
+      });
+    }
+  });
+}
+```
 
 If you supply a callback it will be called once the operation is done. If you don't supply a callback, a promise will be returned.
 
