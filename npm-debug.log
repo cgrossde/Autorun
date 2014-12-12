@@ -1,0 +1,113 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish', './' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose publish [ './' ]
+5 verbose cache add [ './', null ]
+6 verbose cache add name=undefined spec="./" args=["./",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: './',
+7 verbose parsed url   path: './',
+7 verbose parsed url   href: './' }
+8 silly lockFile 0ee6c175- ./
+9 verbose lock ./ /Users/christophgross/.npm/0ee6c175-.lock
+10 verbose tar pack [ '/Users/christophgross/.npm/autorun/1.0.0/package.tgz', './' ]
+11 verbose tarball /Users/christophgross/.npm/autorun/1.0.0/package.tgz
+12 verbose folder ./
+13 info prepublish autorun@1.0.0
+14 silly lockFile 04cb2bca-tar tar://./
+15 verbose lock tar://./ /Users/christophgross/.npm/04cb2bca-tar.lock
+16 silly lockFile 9cabfde4-ss-npm-autorun-1-0-0-package-tgz tar:///Users/christophgross/.npm/autorun/1.0.0/package.tgz
+17 verbose lock tar:///Users/christophgross/.npm/autorun/1.0.0/package.tgz /Users/christophgross/.npm/9cabfde4-ss-npm-autorun-1-0-0-package-tgz.lock
+18 silly lockFile 04cb2bca-tar tar://./
+19 silly lockFile 04cb2bca-tar tar://./
+20 silly lockFile 9cabfde4-ss-npm-autorun-1-0-0-package-tgz tar:///Users/christophgross/.npm/autorun/1.0.0/package.tgz
+21 silly lockFile 9cabfde4-ss-npm-autorun-1-0-0-package-tgz tar:///Users/christophgross/.npm/autorun/1.0.0/package.tgz
+22 silly lockFile e7b79fee-hgross-npm-autorun-1-0-0-package /Users/christophgross/.npm/autorun/1.0.0/package
+23 verbose lock /Users/christophgross/.npm/autorun/1.0.0/package /Users/christophgross/.npm/e7b79fee-hgross-npm-autorun-1-0-0-package.lock
+24 silly lockFile e7b79fee-hgross-npm-autorun-1-0-0-package /Users/christophgross/.npm/autorun/1.0.0/package
+25 silly lockFile e7b79fee-hgross-npm-autorun-1-0-0-package /Users/christophgross/.npm/autorun/1.0.0/package
+26 silly lockFile 0ee6c175- ./
+27 silly lockFile 0ee6c175- ./
+28 silly publish { name: 'autorun',
+28 silly publish   version: '1.0.0',
+28 silly publish   description: 'Multiplatform add/remove of executables to run on startup',
+28 silly publish   repository: { type: 'git', url: 'https://github.com/cgrossde/Autorun' },
+28 silly publish   keywords: [ 'autorun', 'autostart' ],
+28 silly publish   main: 'index.js',
+28 silly publish   scripts:
+28 silly publish    { lint: '(node_modules/jscs/bin/jscs -c .jscsrc --max-errors 10  --reporter console . || exit 0) && (node_modules/eslint/bin/eslint.js -c .eslintrc . || exit 0)',
+28 silly publish      test: 'node node_modules/mocha/bin/mocha' },
+28 silly publish   author:
+28 silly publish    { name: 'Christoph Groß',
+28 silly publish      email: 'gross@blubyte.de',
+28 silly publish      url: 'http://chris-labs.de/' },
+28 silly publish   license: 'MIT',
+28 silly publish   dependencies: { applescript: '^0.2.1', promise: '^6.0.1' },
+28 silly publish   devDependencies:
+28 silly publish    { eslint: '^0.10.1',
+28 silly publish      expect: '^1.1.0',
+28 silly publish      jscs: '^1.8.1',
+28 silly publish      mocha: '^2.0.1' },
+28 silly publish   readme: '# Autorun\n*Multiplatform add/remove of executables to run on startup*\n\nRun an executable on system start using AppleScript on Mac or the registry on Windows. Used in this `node-webkit` App: [Pullover](https://github.com/cgrossde/Pullover). Supports callbacks or promises (Promises/A+ compatible).\n\n**Supported Platforms:**\n\n* Windows\n* Mac\n\n## How to use\n\n```JavaScript\nvar Autorun = require(\'./index\');\nvar autorun = new Autorun(\'AppName\', \'/Applications/pullover.app\');\n\n// Check if platform is supported\nif (autorun.isPlatformSupported()) {\n  // Check if autorun is enabled using callback\n  autorun.isSet(function(err, enabled) {\n    if (err) console.log(err);\n    console.log(\'Autorun is \' + ((enabled) ? \'enabled\' : \'disabled\'));\n\n    // Toogle autorun using promises\n    if (enabled) {\n      autorun.disable()\n      .then(function() {\n        console.log(\'Autorun disabled\');\n      })\n      .catch(function(err) {\n        console.log(\'Error disabling autorun\', err);\n      });\n    }\n    else {\n      autorun.enable()\n      .then(function() {\n        console.log(\'Autorun enabled\');\n      })\n      .catch(function(err) {\n        console.log(\'Error enabling autorun\', err);\n      });\n    }\n  });\n}\n```\n\nIf you supply a callback it will be called once the operation is done. If you don\'t supply a callback, a promise will be returned.\n\n## Function reference\n\n### Autorun(appName, executablePath)\nConstructor. If no `appName` was given, *AutorunApp* will be used. If no executable path was given, it will search for the current executable. Take a look at `_getPathToExecutable()` for more details.\n\n### isPlatformSupported() : bool\nCheck if platform is supported by this module.\n\n### isSet([callback]) : [promise]\nCheck if autorun is enabled. Returns an error if platform is not supported.\n\n### enable([callback]) : [promise]\nEnable autorun. Returns an error if platform is not supported.\n\n### disable([callback]) : [promise]\nDisable autorun. Returns an error if platform is not supported.\n\n## Errors\n\nWill be returned as `err` parameter for callbacks or using `reject` for promises. An error object looks like this:\n\n```JavaScript\n{\n  name: \'AutorunEnableFailed\',\n  description: \'Could not enable autorun using the registry\',\n  platform: \'win\', // os.platform()\n  cause: {  // optional, if this error was triggered by another error\n    name: \'ChildProcessFailed\',\n    description: \'Child process failed\',\n    output: \'...\', // Optional: output of the failed process\n    cause: { ... }\n  }\n}\n```\n\nPossible error names are: *PlatformUnsupported*, *AutorunEnableFailed*, *AutorunDisableFailed*, *AutorunIsSetFailed*, *ChildProcessFailed*\n\n## How it works\n\nUnder Mac AppleScript is used to create a new login item. The only way to differentiate between login items is by their executable path. So make sure to always supply the correct executable path. An error is thrown under Mac if the executable does not exist.\nUnder Windows the registry is used to add/remove an item to `HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`. Windows identifies the item by it\'s AppName, so make sure to always use the same.\n\n## License\n\n    The MIT License (MIT)\n    \n    Copyright (c) 2014 Christoph Groß <gross@blubyte.de> (http://chris-labs.de)\n    \n    Permission is hereby granted, free of charge, to any person obtaining a copy\n    of this software and associated documentation files (the "Software"), to deal\n    in the Software without restriction, including without limitation the rights\n    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n    copies of the Software, and to permit persons to whom the Software is\n    furnished to do so, subject to the following conditions:\n    \n    The above copyright notice and this permission notice shall be included in\n    all copies or substantial portions of the Software.\n    \n    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n    THE SOFTWARE.',
+28 silly publish   readmeFilename: 'README.md',
+28 silly publish   gitHead: '31a65fb0131be334b060dafe83b979947df6dd61',
+28 silly publish   bugs: { url: 'https://github.com/cgrossde/Autorun/issues' },
+28 silly publish   homepage: 'https://github.com/cgrossde/Autorun',
+28 silly publish   _id: 'autorun@1.0.0',
+28 silly publish   _shasum: '759a113158843589ca6fb5e0fe63c6ba3debdd56',
+28 silly publish   _from: './' }
+29 verbose request where is /autorun
+30 verbose request registry https://registry.npmjs.org/
+31 verbose request id fcf9feb2613c4472
+32 verbose url raw /autorun
+33 verbose url resolving [ 'https://registry.npmjs.org/', './autorun' ]
+34 verbose url resolved https://registry.npmjs.org/autorun
+35 verbose request where is https://registry.npmjs.org/autorun
+36 info trying registry request attempt 1 at 14:17:04
+37 http PUT https://registry.npmjs.org/autorun
+38 http 403 https://registry.npmjs.org/autorun
+39 verbose headers { date: 'Fri, 12 Dec 2014 13:17:05 GMT',
+39 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+39 verbose headers   'content-type': 'application/json',
+39 verbose headers   'cache-control': 'max-age=60',
+39 verbose headers   'content-length': '7935',
+39 verbose headers   'accept-ranges': 'bytes',
+39 verbose headers   via: '1.1 varnish',
+39 verbose headers   'x-served-by': 'cache-fra1231-FRA',
+39 verbose headers   'x-cache': 'MISS',
+39 verbose headers   'x-cache-hits': '0',
+39 verbose headers   'x-timer': 'S1418390224.260905,VS0,VE855',
+39 verbose headers   'keep-alive': 'timeout=10, max=50',
+39 verbose headers   connection: 'Keep-Alive' }
+40 error publish Failed PUT 403
+41 error Error: forbidden cannot modify pre-existing version: 1.0.0
+41 error old={"name":"autorun","version":"1.0.0","description":"Multiplatform add/remove of executables to run on startup","repository":{"type":"git","url":"https://github.com/cgrossde/Autorun"},"keywords":["autorun","autostart"],"main":"index.js","scripts":{"lint":"(node_modules/jscs/bin/jscs -c .jscsrc --max-errors 10  --reporter console . || exit 0) && (node_modules/eslint/bin/eslint.js -c .eslintrc . || exit 0)","test":"node node_modules/mocha/bin/mocha"},"author":{"name":"Christoph Groß","email":"gross@blubyte.de","url":"http://chris-labs.de/"},"license":"MIT","dependencies":{"applescript":"^0.2.1","promise":"^6.0.1"},"devDependencies":{"eslint":"^0.10.1","expect":"^1.1.0","jscs":"^1.8.1","mocha":"^2.0.1"},"gitHead":"0c43ffb0db5895d5cf7dc83d85ff2db3fbadb95b","bugs":{"url":"https://github.com/cgrossde/Autorun/issues"},"homepage":"https://github.com/cgrossde/Autorun","_id":"autorun@1.0.0","_shasum":"54eafa1421bb5dd5d92218881fd49ce2d7e0da52","_from":"./","_npmVersion":"1.4.28","_npmUser":{"name":"cgrossde","email":"gross@blubyte.de"},"maintainers":[{"name":"cgrossde","email":"gross@blubyte.de"}],"dist":{"shasum":"54eafa1421bb5dd5d92218881fd49ce2d7e0da52","tarball":"http://registry.npmjs.org/autorun/-/autorun-1.0.0.tgz"}}
+41 error new={"name":"autorun","version":"1.0.0","description":"Multiplatform add/remove of executables to run on startup","repository":{"type":"git","url":"https://github.com/cgrossde/Autorun"},"keywords":["autorun","autostart"],"main":"index.js","scripts":{"lint":"(node_modules/jscs/bin/jscs -c .jscsrc --max-errors 10  --reporter console . || exit 0) && (node_modules/eslint/bin/eslint.js -c .eslintrc . || exit 0)","test":"node node_modules/mocha/bin/mocha"},"author":{"name":"Christoph Groß","email":"gross@blubyte.de","url":"http://chris-labs.de/"},"license":"MIT","dependencies":{"applescript":"^0.2.1","promise":"^6.0.1"},"devDependencies":{"eslint":"^0.10.1","expect":"^1.1.0","jscs":"^1.8.1","mocha":"^2.0.1"},"readme":"# Autorun\u000a*Multiplatform add/remove of executables to run on startup*\u000a\u000aRun an executable on system start using AppleScript on Mac or the registry on Windows. Used in this `node-webkit` App: [Pullover](https://github.com/cgrossde/Pullover). Supports callbacks or promises (Promises/A+ compatible).\u000a\u000a**Supported Platforms:**\u000a\u000a* Windows\u000a* Mac\u000a\u000a## How to use\u000a\u000a```JavaScript\u000avar Autorun = require('./index');\u000avar autorun = new Autorun('AppName', '/Applications/pullover.app');\u000a\u000a// Check if platform is supported\u000aif (autorun.isPlatformSupported()) {\u000a  // Check if autorun is enabled using callback\u000a  autorun.isSet(function(err, enabled) {\u000a    if (err) console.log(err);\u000a    console.log('Autorun is ' + ((enabled) ? 'enabled' : 'disabled'));\u000a\u000a    // Toogle autorun using promises\u000a    if (enabled) {\u000a      autorun.disable()\u000a      .then(function() {\u000a        console.log('Autorun disabled');\u000a      })\u000a      .catch(function(err) {\u000a        console.log('Error disabling autorun', err);\u000a      });\u000a    }\u000a    else {\u000a      autorun.enable()\u000a      .then(function() {\u000a        console.log('Autorun enabled');\u000a      })\u000a      .catch(function(err) {\u000a        console.log('Error enabling autorun', err);\u000a      });\u000a    }\u000a  });\u000a}\u000a```\u000a\u000aIf you supply a callback it will be called once the operation is done. If you don't supply a callback, a promise will be returned.\u000a\u000a## Function reference\u000a\u000a### Autorun(appName, executablePath)\u000aConstructor. If no `appName` was given, *AutorunApp* will be used. If no executable path was given, it will search for the current executable. Take a look at `_getPathToExecutable()` for more details.\u000a\u000a### isPlatformSupported() : bool\u000aCheck if platform is supported by this module.\u000a\u000a### isSet([callback]) : [promise]\u000aCheck if autorun is enabled. Returns an error if platform is not supported.\u000a\u000a### enable([callback]) : [promise]\u000aEnable autorun. Returns an error if platform is not supported.\u000a\u000a### disable([callback]) : [promise]\u000aDisable autorun. Returns an error if platform is not supported.\u000a\u000a## Errors\u000a\u000aWill be returned as `err` parameter for callbacks or using `reject` for promises. An error object looks like this:\u000a\u000a```JavaScript\u000a{\u000a  name: 'AutorunEnableFailed',\u000a  description: 'Could not enable autorun using the registry',\u000a  platform: 'win', // os.platform()\u000a  cause: {  // optional, if this error was triggered by another error\u000a    name: 'ChildProcessFailed',\u000a    description: 'Child process failed',\u000a    output: '...', // Optional: output of the failed process\u000a    cause: { ... }\u000a  }\u000a}\u000a```\u000a\u000aPossible error names are: *PlatformUnsupported*, *AutorunEnableFailed*, *AutorunDisableFailed*, *AutorunIsSetFailed*, *ChildProcessFailed*\u000a\u000a## How it works\u000a\u000aUnder Mac AppleScript is used to create a new login item. The only way to differentiate between login items is by their executable path. So make sure to always supply the correct executable path. An error is thrown under Mac if the executable does not exist.\u000aUnder Windows the registry is used to add/remove an item to `HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`. Windows identifies the item by it's AppName, so make sure to always use the same.\u000a\u000a## License\u000a\u000a    The MIT License (MIT)\u000a    \u000a    Copyright (c) 2014 Christoph Groß <gross@blubyte.de> (http://chris-labs.de)\u000a    \u000a    Permission is hereby granted, free of charge, to any person obtaining a copy\u000a    of this software and associated documentation files (the \"Software\"), to deal\u000a    in the Software without restriction, including without limitation the rights\u000a    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\u000a    copies of the Software, and to permit persons to whom the Software is\u000a    furnished to do so, subject to the following conditions:\u000a    \u000a    The above copyright notice and this permission notice shall be included in\u000a    all copies or substantial portions of the Software.\u000a    \u000a    THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\u000a    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\u000a    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\u000a    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\u000a    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\u000a    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\u000a    THE SOFTWARE.","readmeFilename":"README.md","gitHead":"31a65fb0131be334b060dafe83b979947df6dd61","bugs":{"url":"https://github.com/cgrossde/Autorun/issues"},"homepage":"https://github.com/cgrossde/Autorun","_id":"autorun@1.0.0","_shasum":"759a113158843589ca6fb5e0fe63c6ba3debdd56","_from":"./","_npmVersion":"1.4.28","_npmUser":{"name":"cgrossde","email":"gross@blubyte.de"},"maintainers":[{"name":"cgrossde","email":"gross@blubyte.de"}],"dist":{"shasum":"759a113158843589ca6fb5e0fe63c6ba3debdd56","tarball":"http://registry.npmjs.org/autorun/-/autorun-1.0.0.tgz"}}: autorun
+41 error     at RegClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:308:14)
+41 error     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:246:65)
+41 error     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:236:22)
+41 error     at Request.emit (events.js:98:17)
+41 error     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1142:14)
+41 error     at Request.emit (events.js:117:20)
+41 error     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1096:12)
+41 error     at IncomingMessage.emit (events.js:117:20)
+41 error     at _stream_readable.js:943:16
+41 error     at process._tickCallback (node.js:419:13)
+42 error If you need help, you may report this *entire* log,
+42 error including the npm and node versions, at:
+42 error     <http://github.com/npm/npm/issues>
+43 error System Darwin 14.0.0
+44 error command "/usr/local/bin/node" "/usr/local/bin/npm" "publish" "./"
+45 error cwd /Users/christophgross/Dropbox/Development/Projekte/autorun
+46 error node -v v0.10.33
+47 error npm -v 1.4.28
+48 verbose exit [ 1, true ]

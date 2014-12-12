@@ -1,6 +1,6 @@
 {
   "name": "autorun",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Multiplatform add/remove of executables to run on startup",
   "repository": "https://github.com/cgrossde/Autorun",
   "keywords": [
