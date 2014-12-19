@@ -11,7 +11,7 @@ Run an executable on system start using AppleScript on Mac or the registry on Wi
 ## How to use
 
 ```JavaScript
-var Autorun = require('./index');
+var Autorun = require('autorun');
 var autorun = new Autorun('AppName', '/Applications/pullover.app');
 
 // Check if platform is supported
